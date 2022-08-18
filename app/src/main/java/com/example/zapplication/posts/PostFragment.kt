@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.zapplication.databinding.FragmentPostBinding
 import com.example.zapplication.entities.Posts
 import com.example.zapplication.utils.Status
@@ -35,12 +37,28 @@ class PostFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.itemsRecyclerview.adapter = adapter
-
+        setupRecyclerView()
         setupObservers()
         binding.swipeRefresh.setOnRefreshListener { viewModel.getPosts() }
     }
 
+    private fun setupRecyclerView(){
+        val layoutManager = GridLayoutManager(requireContext(),1)
+        binding.itemsRecyclerview.layoutManager =layoutManager
+        binding.itemsRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visibleItemCount =layoutManager.childCount
+                val pastVisibleItem =layoutManager.findFirstVisibleItemPosition()
+                val total =adapter.itemCount
+                    if ((visibleItemCount + pastVisibleItem) >= total) {
+                        viewModel.getPosts()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
+        binding.itemsRecyclerview.adapter = adapter
+
+    }
     private fun setupObservers() {
         viewModel.data.observe(viewLifecycleOwner, Observer { result ->
             binding.swipeRefresh.isRefreshing =result.status.get() ==Status.LOADING
