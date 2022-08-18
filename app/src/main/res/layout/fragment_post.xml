@@ -6,21 +6,19 @@
     <data>
 
         <import type="android.view.View" />
-
         <import type="com.example.zapplication.utils.Status" />
-
-        <import type="com.example.zapplication.brands.PostsViewModel" />
+        <import type="com.example.zapplication.posts.PostsViewModel" />
 
     <variable
         name="vm"
-        type="com.example.zapplication.brands.PostsViewModel" />
+        type="com.example.zapplication.posts.PostsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F1F1F1"
-        tools:context=".brands.PostFragment">
+        tools:context=".posts.PostFragment">
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

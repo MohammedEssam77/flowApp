@@ -1,4 +1,4 @@
-package com.example.zapplication.brands
+package com.example.zapplication.posts
 
 
 import android.os.Bundle
@@ -16,46 +16,41 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PostFragment : Fragment() {
-    private lateinit var binding : FragmentPostBinding
+    private lateinit var binding: FragmentPostBinding
     private val viewModel by viewModels<PostsViewModel>()
-    private var results = mutableListOf<Posts>()
     private val adapter by lazy {
-       PostAdapter(PostItemClick { it ->
-
-
+        PostAdapter(PostItemClick { it ->
         })
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return FragmentPostBinding.inflate(inflater, container,false)
+        return FragmentPostBinding.inflate(inflater, container, false)
             .apply {
                 binding = this
                 lifecycleOwner = viewLifecycleOwner
                 vm = viewModel
             }.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.itemsRecyclerview.adapter = adapter
 
         setupObservers()
-        binding.swipeRefresh.setOnRefreshListener{viewModel.getPosts()}
+        binding.swipeRefresh.setOnRefreshListener { viewModel.getPosts() }
     }
 
     private fun setupObservers() {
         viewModel.data.observe(viewLifecycleOwner, Observer { result ->
+            binding.swipeRefresh.isRefreshing =result.status.get() ==Status.LOADING
             when (result.status.get()) {
-                Status.LOADING -> binding.swipeRefresh.isRefreshing = true
                 Status.SUCCESS -> result.data?.let { adapter.submitList(it) }
                 Status.ERROR -> Toast.makeText(requireContext(), result.msg, Toast.LENGTH_SHORT)
                     .show()
                 else -> {
-              //     adapter.submitList(results)
                     binding.swipeRefresh.isRefreshing = false
-                 }
+                }
             }
         })
     }

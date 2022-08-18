@@ -14,7 +14,7 @@ class RepositoryImp
 constructor(private val postApi: PostApi):BaseRepo(),PostRepository {
 
     override fun getPost()
-    = loadFromApi (( postApi::getPostItems)).map{
+    = loadFromApi ((postApi::getPostItems)).map{
             if (it.status.get() == Status.SUCCESS)
                 Resource.success((it.data as List<Posts>))
             else it

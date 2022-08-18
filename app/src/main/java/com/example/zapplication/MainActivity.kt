@@ -7,8 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.zapplication.brands.PostsViewModel
+import com.example.zapplication.posts.PostsViewModel
 import com.example.zapplication.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,5 +28,6 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.fragment).navigateUp(appBarConfigurations)
-                || super.onSupportNavigateUp()    }
+                || super.onSupportNavigateUp()
+    }
 }

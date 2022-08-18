@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/news_nav"
+    android:id="@+id/post_nav"
     app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.zapplication.brands.PostFragment"
+        android:name="com.example.zapplication.posts.PostFragment"
         android:label="fragment_main">
 
     </fragment>

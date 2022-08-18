@@ -1,4 +1,4 @@
-package com.example.zapplication.brands
+package com.example.zapplication.posts
 
 import androidx.lifecycle.*
 import com.example.zapplication.entities.Posts
@@ -13,18 +13,17 @@ import javax.inject.Inject
 @HiltViewModel
 class PostsViewModel
 @Inject
-constructor(private val brandHandler: PostHandler):ViewModel() {
-    private val _brandLiveData by lazy { MutableLiveData<Resource<List<Posts>>>().also { getPosts() } }
-    val data= _brandLiveData as LiveData<Resource<List<Posts>>>
+constructor(private val postHandler: PostHandler):ViewModel() {
+    private val _postLiveData by lazy { MutableLiveData<Resource<List<Posts>>>().also { getPosts() } }
+    val data= _postLiveData as LiveData<Resource<List<Posts>>>
 
     fun getPosts() {
         viewModelScope.launch(Dispatchers.IO) {
-            _brandLiveData.postValue(Resource.loading())
-            brandHandler.getPost().first().also {
-                _brandLiveData.postValue(it as Resource <List<Posts>>)
+            _postLiveData.postValue(Resource.loading())
+            postHandler.getPost().first().also {
+                _postLiveData.postValue(it as Resource<List<Posts>>)
 
             }
-
         }
     }
 }

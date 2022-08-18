@@ -1,4 +1,4 @@
-package com.example.zapplication.brands
+package com.example.zapplication.posts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -21,9 +21,8 @@ class PostAdapter (val callback: PostItemClick) : ListAdapter<Posts, PostAdapter
     }
 
     class PostViewHolder(val viewDataBinding: PostItemBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
-
-        fun bind(listener: PostItemClick, news: Posts) {
-            viewDataBinding.post= news
+        fun bind(listener: PostItemClick, posts: Posts) {
+            viewDataBinding.post= posts
             viewDataBinding.executePendingBindings()
         }
 
